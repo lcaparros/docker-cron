@@ -1,0 +1,2 @@
+*/1 * * * * bash /files/test.sh > /proc/1/fd/1 2>&1
+*/1 * * * * bash /files/test2.sh > /proc/1/fd/1 2>&1

@@ -1,4 +1,4 @@
-FROM alpine
+FROM ubuntu:latest
 
 ARG BUILD_DATE
 ARG VERSION
@@ -7,19 +7,10 @@ LABEL maintainer="lcaparros"
 
 RUN \
   echo "**** install packages ****" && \
-  apk update && \
-  apk add --no-cache --virtual=build-dependencies \
-    curl && \
-  echo "**** cleanup ****" && \
-  apk del --purge \
-    build-dependencies && \
-  rm -rf \
-    /tmp/* \
-    /root/.cache \
-    /root/.cargo
+  apt update && \
+  apt install -y cron
 
 WORKDIR /files
 VOLUME /files
-EXPOSE 8080
 
-ENTRYPOINT ["ls", "-l"]
+ENTRYPOINT { cat /files/crontab.txt; } | crontab - && cron && sleep infinity
