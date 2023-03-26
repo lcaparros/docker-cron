@@ -13,7 +13,8 @@ RUN \
   curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
   apt-get install -y nodejs && \
   node --version && \
-  npm --version
+  npm --version && \
+  npm install -g run-func
 
 WORKDIR /files
 VOLUME /files
