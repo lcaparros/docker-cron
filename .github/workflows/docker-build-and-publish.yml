@@ -38,3 +38,11 @@ jobs:
       
       - name: Push Docker image to registry
         run: docker push ${{ secrets.DOCKER_REGISTRY }}/${{ steps.get_name.outputs.IMAGE_NAME }}:${{ steps.get_version.outputs.VERSION }}
+
+      - name: Update latest the Docker image
+        if: github.ref == 'refs/heads/main' 
+        run: docker tag ${{ secrets.DOCKER_REGISTRY }}/${{ steps.get_name.outputs.IMAGE_NAME }}:${{ steps.get_version.outputs.VERSION }} ${{ secrets.DOCKER_REGISTRY }}/${{ steps.get_name.outputs.IMAGE_NAME }}:latest
+
+      - name: Push latest Docker image to registry
+        if: github.ref == 'refs/heads/main'
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/${{ steps.get_name.outputs.IMAGE_NAME }}:latest
